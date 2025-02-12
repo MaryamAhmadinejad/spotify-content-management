@@ -2,3 +2,6 @@ services:
   eventsim:
     image: khoramism/event-generator-eventsim:1.2
     container_name: eventsim
+    volumes:
+      - ./config.json:/config.json
+    command: ["-c", "/config.json"]

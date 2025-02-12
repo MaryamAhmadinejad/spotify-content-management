@@ -1,0 +1,48 @@
+{
+    "seed": 12345,
+    "alpha": 10.0,
+    "beta": 1800.0,
+    "damping": 0.8,
+    "weekend-damping": 0.6,
+    "weekend-damping-offset": 120,
+    "weekend-damping-scale": 180,
+    "session-gap": 300,
+    "start-date": "2023-01-01T00:00:00Z",
+    "end-date": "2023-12-31T23:59:59Z",
+    "n-users": 1000,
+    "first-user-id": 1,
+    "growth-rate": 0.05,
+    "tag": "eventsim",
+  
+    "states": [
+      { "page": "home", "status": "unregistered", "auth": false, "user_level": 0 },
+      { "page": "login", "status": "logged_out", "auth": false, "user_level": 0 },
+      { "page": "dashboard", "status": "logged_in", "auth": true, "user_level": 1 },
+      { "page": "profile", "status": "logged_in", "auth": true, "user_level": 1 },
+      { "page": "settings", "status": "logged_in", "auth": true, "user_level": 2 }
+    ],
+  
+    "transitions": [
+      { "from": { "page": "home", "status": "unregistered" }, "to": { "page": "login", "status": "logged_out" }, "probability": 0.5 },
+      { "from": { "page": "login", "status": "logged_out" }, "to": { "page": "dashboard", "status": "logged_in" }, "probability": 0.8 },
+      { "from": { "page": "dashboard", "status": "logged_in" }, "to": { "page": "profile", "status": "logged_in" }, "probability": 0.3 },
+      { "from": { "page": "dashboard", "status": "logged_in" }, "to": { "page": "settings", "status": "logged_in" }, "probability": 0.2 }
+    ],
+  
+    "new-user": [
+      { "page": "home", "status": "unregistered", "probability": 0.9 },
+      { "page": "dashboard", "status": "logged_in", "probability": 0.1 }
+    ],
+  
+    "new-session": [
+      { "page": "login", "status": "logged_out", "probability": 0.7 },
+      { "page": "dashboard", "status": "logged_in", "probability": 0.3 }
+    ],
+  
+    "show-user-details": {
+      "unregistered": false,
+      "logged_out": true,
+      "logged_in": true
+    }
+}
+  
