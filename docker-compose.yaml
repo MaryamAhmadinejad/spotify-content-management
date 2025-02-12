@@ -1,4 +1,4 @@
 services:
   eventsim:
-    image: khoramism/event-generator-eventsim
+    image: khoramism/event-generator-eventsim:1.2
     container_name: eventsim
