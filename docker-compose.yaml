@@ -4,6 +4,6 @@ services:
     container_name: eventsim
     volumes:
       - ./config.json:/config.json
+      - ./data:/data
     command: >
       bin/eventsim -c "/config.json" --from 365 --nusers 30000 --growth-rate 0.30 /data/fake.json
-    restart: unless-stopped
