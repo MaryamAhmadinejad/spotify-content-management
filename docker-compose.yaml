@@ -4,4 +4,4 @@ services:
     container_name: eventsim
     volumes:
       - ./config.json:/config.json
-    command: ["-c", "/config.json"]
+    command: ["eventsim", "-c", "/config.json"]
