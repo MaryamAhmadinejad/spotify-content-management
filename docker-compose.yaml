@@ -77,22 +77,20 @@ services:
       - SPARK_SSL_ENABLED=no
     volumes:
       - ./src:/app/src
-      # - ./config:/app/config
 
   spark-worker:
     image: bitnami/spark:latest
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
-      - SPARK_WORKER_CORES=1
-      - SPARK_WORKER_MEMORY=2g
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=3g
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
       - SPARK_RPC_ENCRYPTION_ENABLED=no
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
       - SPARK_SSL_ENABLED=no
     volumes:
       - ./src:/app/src
-      # - ./config:/app/config
     depends_on:
       - spark-master
 
@@ -105,7 +103,6 @@ services:
       - HADOOP_USER_NAME=root
     volumes:
       - ./src:/app/src  # Mount the source code
-      # - ./config:/app/config
     depends_on:
       - kafka
       - namenode
@@ -114,7 +111,8 @@ services:
     command: [
       "spark-submit",
       "--master", "spark://spark-master:7077",
-      "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0",  
+      "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0",
+      "--executor-memory", "3g", 
       "/app/src/kafka_to_hdfs.py"
       ]
 
