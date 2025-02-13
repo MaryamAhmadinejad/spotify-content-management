@@ -19,6 +19,7 @@ spark = SparkSession.builder \
     .master("spark://spark-master:7077") \
     .config("spark.sql.catalogImplementation", "hive") \
     .enableHiveSupport() \
+    .config("spark.executor.memory", "3g") \
     .getOrCreate()
 
 spark.sparkContext.setLogLevel("WARN")
