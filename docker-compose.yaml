@@ -77,7 +77,7 @@ services:
       - SPARK_SSL_ENABLED=no
     volumes:
       - ./src:/app/src
-      - ./config:/app/config
+      # - ./config:/app/config
 
   spark-worker:
     image: bitnami/spark:latest
@@ -92,7 +92,7 @@ services:
       - SPARK_SSL_ENABLED=no
     volumes:
       - ./src:/app/src
-      - ./config:/app/config
+      # - ./config:/app/config
     depends_on:
       - spark-master
 
@@ -105,7 +105,7 @@ services:
       - HADOOP_USER_NAME=root
     volumes:
       - ./src:/app/src  # Mount the source code
-      - ./config:/app/config
+      # - ./config:/app/config
     depends_on:
       - kafka
       - namenode
