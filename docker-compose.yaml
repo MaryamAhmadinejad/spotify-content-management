@@ -215,6 +215,19 @@ services:
     volumes:
       - "./prometheus.yml:/etc/prometheus/prometheus.yml"
 
+  dbt:
+    image: ghcr.io/dbt-labs/dbt-spark:latest
+    container_name: dbt
+    volumes:
+      - ./dbt:/usr/app
+    working_dir: /usr/app
+    environment:
+      DBT_SPARK_HOST: spark-master
+      DBT_SPARK_PORT: 4040
+      DBT_SPARK_METHOD: thrift
+    depends_on:
+      - spark-master
+
 volumes:
   hadoop_namenode:
   hadoop_datanode:
