@@ -144,7 +144,6 @@ services:
       - namenode
     environment:
       - HADOOP_USER_NAME=root
-      -
 
   clickhouse:
     image: clickhouse:24.9.3
