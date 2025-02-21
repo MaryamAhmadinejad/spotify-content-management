@@ -69,7 +69,7 @@ services:
     ports:
       - "8080:8080"  # Spark Master UI
       - "7077:7077"  # Spark Master Port
-      - "10000:10000"  # Thrift Server Port
+      - "4040:10000"  # Thrift Server Port
     environment:
       - SPARK_MODE=master
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
@@ -78,7 +78,6 @@ services:
       - SPARK_SSL_ENABLED=no
     volumes:
       - ./src:/app/src
-    command: [ "/opt/bitnami/spark/sbin/start-master.sh", "&&", "/opt/bitnami/spark/sbin/start-thriftserver.sh", "--master", "spark://spark-master:7077" ]
 
   spark-worker:
     image: bitnami/spark:latest
@@ -225,7 +224,7 @@ services:
     working_dir: /usr/app
     environment:
       DBT_SPARK_HOST: spark-master
-      DBT_SPARK_PORT: 10000
+      DBT_SPARK_PORT: 4040
       DBT_SPARK_METHOD: thrift
     depends_on:
       - spark-master
