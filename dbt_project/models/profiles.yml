@@ -1,0 +1,13 @@
+default:
+  outputs:
+    dev:
+      type: spark
+      method: thrift
+      host: spark-master
+      port: 10000
+      user:  # leave empty if no authentication
+      schema: default
+      connect_timeout: 60
+      retry_all: true
+      threads: 4 
+  target: dev
