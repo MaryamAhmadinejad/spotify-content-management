@@ -23,7 +23,7 @@ models:
       +file_format: parquet
     silver:
       dimensions:
-        +materialized: view
+        +materialized: table
         +file_format: parquet
       facts:
         +materialized: table
