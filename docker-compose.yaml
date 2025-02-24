@@ -143,6 +143,8 @@ services:
       - SPARK_MASTER_PORT=7077
       - SPARK_THRIFT_SERVER_HOST=spark-master
       - SPARK_THRIFT_SERVER_PORT=10000
+      - HADOOP_USER_NAME=root
+      - HDFS_NAMENODE=namenode:9000
     depends_on:
       - spark-master
 
