@@ -1,4 +1,9 @@
-{{ config(materialized='view', file_format='parquet') }}
+{{ config(
+    materialized='table',
+    file_format='parquet',
+    location_root='hdfs://namenode:9000/silver/dim_location',
+    external=true
+) }}
 
 with location_data as (
   select city, state, lon, lat from {{ ref('bronze_auth_events') }}
