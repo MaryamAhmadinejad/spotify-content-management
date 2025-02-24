@@ -1,0 +1,19 @@
+FROM python:3.9-slim
+
+WORKDIR /usr/app
+
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    git \
+    ssh \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install dbt-spark
+RUN pip install --no-cache-dir dbt-spark[PyHive]
+
+# Copy dbt project files
+COPY dbt_project/ .
+
+# Command to keep container running
+CMD ["tail", "-f", "/dev/null"]
