@@ -1,4 +1,9 @@
-{{ config(materialized='view', file_format='parquet') }}
+{{ config(
+    materialized='table',
+    file_format='parquet',
+    location_root='hdfs://namenode:9000/silver/dim_user',
+    external=true
+) }}
 
 with all_users as (
     select 
