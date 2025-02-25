@@ -1,4 +1,10 @@
-{{ config(materialized='table', file_format='parquet', partition_by=['year', 'month', 'day']) }}
+{{ config(
+    materialized='table',
+    file_format='parquet',
+    location_root='hdfs://namenode:9000/silver/fact_auth_events',
+    external=true,
+    partition_by=['year', 'month', 'day']
+) }}
 
 select
   md5(concat(cast(userId as string), cast(ts as string))) as auth_event_id,
