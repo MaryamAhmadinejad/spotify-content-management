@@ -29,3 +29,8 @@ models:
         +materialized: table
         +file_format: parquet
         +partition_by: ['year', 'month', 'day']
+
+    gold:
+        +materialized: table
+        +file_format: parquet
+        +partition_by: ['year', 'month', 'day']
