@@ -1,4 +1,9 @@
-{{ config(materialized='view', file_format='parquet') }}
+{{ config(
+    materialized='table',
+    file_format='parquet',
+    location_root='hdfs://namenode:9000/silver/dim_time',
+    external=true
+) }}
 
 with time_events as (
   select ts_normalized as timestamp from {{ ref('bronze_auth_events') }}
