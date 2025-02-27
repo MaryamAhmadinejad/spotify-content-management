@@ -36,9 +36,8 @@ services:
         echo 'startDelaySeconds: 0' > /opt/jmx-exporter/kafka-jmx-config.yaml &&
         echo 'hostPort: 7071' >> /opt/jmx-exporter/kafka-jmx-config.yaml
         echo 'rules:
-          - pattern: \"kafka.consumer<type=ConsumerLagMetrics, name=(.*)><>Value\"
-            name: \"kafka_consumer_\\1\"
-            type: GAUGE' >> /opt/jmx-exporter/kafka-jmx-config.yaml
+          - pattern: \"kafka.controller<type=KafkaController, name=ActiveControllerCount><>Value\"
+            name: \"kafka_controller_active_controller_count\"' >> /opt/jmx-exporter/kafka-jmx-config.yaml
       "
 
   # Kafka UI 
