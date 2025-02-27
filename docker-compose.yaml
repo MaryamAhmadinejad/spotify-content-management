@@ -257,3 +257,4 @@ volumes:
   clickhouse-log-volume:
   metabase-data-volume:
   grafana-data:
+  prometheus_data:
