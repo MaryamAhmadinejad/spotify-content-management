@@ -23,12 +23,12 @@ services:
       - jmx-exporter:/opt/jmx-exporter
 
   jmx-exporter-setup:
-    image: busybox
+    image: alpine
     volumes:
       - jmx-exporter:/opt/jmx-exporter
     command: >
       /bin/sh -c "
-      wget -q -O /opt/jmx-exporter/jmx_prometheus_javaagent-0.18.0.jar https://github.com/prometheus/jmx_exporter/releases/download/0.18.0/jmx_prometheus_javaagent-0.18.0.jar &&
+      wget -q -O /opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar https://github.com/prometheus/jmx_exporter/releases/download/1.1.0/jmx_prometheus_javaagent-1.1.0.jar &&
       echo 'startDelaySeconds: 0
       hostPort: 7071
       rules:
