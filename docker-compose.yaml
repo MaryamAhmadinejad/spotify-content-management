@@ -243,7 +243,11 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+      - prometheus_data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--storage.tsdb.path=/prometheus"
+    
 
 volumes:
   jmx-exporter:
