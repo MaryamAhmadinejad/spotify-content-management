@@ -35,7 +35,7 @@ services:
         rules:\n\
           - pattern: \"kafka.server<type=BrokerTopicMetrics, name=(.*)><>Count\"\n\
             name: \"kafka_broker_topic_\\1_total\"\n\
-            type: COUNTER\n\
+            type: COUNTER\n' > /opt/jmx-exporter/kafka-jmx-config.yaml
       "
 
   # Kafka UI 
