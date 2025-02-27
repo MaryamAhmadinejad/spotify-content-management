@@ -23,6 +23,8 @@ services:
       retries: 10
     volumes:
       - jmx-exporter:/opt/jmx-exporter
+    depends_on:
+      - jmx-exporter-setup
 
   jmx-exporter-setup:
     image: alpine
