@@ -4,6 +4,7 @@ services:
     image: bitnami/kafka:latest
     ports:
       - "9092:9092"
+      - "7071:7071"
     environment:
     - KAFKA_CFG_PROCESS_ROLES=controller,broker
     - KAFKA_CFG_NODE_ID=1
@@ -13,7 +14,7 @@ services:
     - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
     - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
     - ALLOW_PLAINTEXT_LISTENER=yes
-    # - KAFKA_OPTS=-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=7071:/opt/jmx-exporter/kafka-jmx-config.yaml
+    - KAFKA_OPTS=-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=7071:/opt/jmx-exporter/kafka-jmx-config.yaml
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "kafka-topics.sh --bootstrap-server localhost:9092 --list || exit 1"]
