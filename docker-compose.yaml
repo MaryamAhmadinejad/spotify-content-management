@@ -34,7 +34,6 @@ services:
       /bin/sh -c "
         wget -q -O /opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar https://github.com/prometheus/jmx_exporter/releases/download/1.1.0/jmx_prometheus_javaagent-1.1.0.jar &&
         echo 'startDelaySeconds: 0' > /opt/jmx-exporter/kafka-jmx-config.yaml &&
-        echo 'hostPort: 7071' >> /opt/jmx-exporter/kafka-jmx-config.yaml
         echo 'rules:
           - pattern: \"kafka.controller<type=KafkaController, name=ActiveControllerCount><>Value\"
             name: \"kafka_controller_active_controller_count\"' >> /opt/jmx-exporter/kafka-jmx-config.yaml
