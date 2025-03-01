@@ -17,7 +17,7 @@ services:
     - KAFKA_OPTS=-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=7071:/opt/jmx-exporter/kafka-jmx-config.yaml
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "kafka-topics.sh --bootstrap-server localhost:9092 --list || exit 1"]
+      test: ["CMD", "curl", "-f", "http://kafka:7071/metrics"]
       interval: 15s
       timeout: 20s
       retries: 10
