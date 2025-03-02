@@ -88,7 +88,8 @@ services:
       
   # Spark Standalone Cluster
   spark-master:
-    image: bitnami/spark:latest
+    image: bde2020/spark-master:3.3.0-hadoop3.3
+    platform: linux/amd64
     ports:
       - "8080:8080"  # Spark Master UI
       - "7077:7077"  # Spark Master Port
@@ -104,10 +105,7 @@ services:
       - ENABLE_THRIFT_SERVER=yes # for spark-dbt
     command: >
       sh -c "
-        /opt/bitnami/spark/sbin/start-thriftserver.sh & 
-        java -javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml 
-        -cp \"/opt/bitnami/spark/jars/*\" org.apache.spark.deploy.master.Master & 
-        /opt/bitnami/scripts/spark/run.sh
+        java -javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml
       "
     volumes:
       - jmx-exporter:/opt/jmx-exporter
