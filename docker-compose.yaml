@@ -105,7 +105,7 @@ services:
       # - SPARK_MASTER_OPTS=-javaagent:/opt/jmx_exporter/jmx_prometheus_javaagent.jar=9100:/opt/jmx_exporter/config.yaml
     command: sh -c "(/opt/bitnami/spark/sbin/start-thriftserver.sh &) && /opt/bitnami/scripts/spark/run.sh"
     volumes:
-      - jmx-exporter:/tmp/jmx-exporter
+      - jmx-exporter:/opt/jmx-exporter
     depends_on:
       - jmx-exporter-setup
 
