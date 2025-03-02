@@ -107,7 +107,7 @@ services:
     volumes:
       - jmx-exporter:/opt/jmx-exporter
     command: >
-      sh -c "java -javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml"
+      java -javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml
     depends_on:
       - jmx-exporter-setup
 
