@@ -102,10 +102,14 @@ services:
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
       - SPARK_SSL_ENABLED=no
       - ENABLE_THRIFT_SERVER=yes # for spark-dbt
-      - SPARK_MASTER_OPTS="-Dspark.driver.extraJavaOptions='-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml'"
-      - SPARK_MASTER_OPTS="$SPARK_MASTER_OPTS -Dspark.executor.extraJavaOptions='-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml'"
-
-    command: sh -c "(/opt/bitnami/spark/sbin/start-thriftserver.sh &) && /opt/bitnami/scripts/spark/run.sh"
+    # command: sh -c "(/opt/bitnami/spark/sbin/start-thriftserver.sh &) && /opt/bitnami/scripts/spark/run.sh"
+    command: >
+      sh -c "
+        /opt/bitnami/spark/sbin/start-thriftserver.sh & 
+        java -javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml 
+        -cp \"/opt/bitnami/spark/jars/*\" org.apache.spark.deploy.master.Master & 
+        /opt/bitnami/scripts/spark/run.sh
+      "
     volumes:
       - jmx-exporter:/opt/jmx-exporter
     depends_on:
