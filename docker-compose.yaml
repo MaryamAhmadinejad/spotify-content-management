@@ -103,9 +103,11 @@ services:
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
       - SPARK_SSL_ENABLED=no
       - ENABLE_THRIFT_SERVER=yes # for spark-dbt
-      - JMX_EXPORTER_OPTS=-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml
+      # - JMX_EXPORTER_OPTS=-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml
     volumes:
       - jmx-exporter:/opt/jmx-exporter
+    command: >
+      sh -c "java -javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml"
     depends_on:
       - jmx-exporter-setup
 
