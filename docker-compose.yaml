@@ -94,7 +94,7 @@ services:
       - "7077:7077"  # Spark Master Port
       - "4040:4040"  # Spark Application UI
       - "10000:10000" # for spark-dbt
-      - "9100:9100"  # JMX Exporter
+      # - "9100:9100"  # JMX Exporter
     environment:
       - SPARK_MODE=master
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
@@ -102,7 +102,7 @@ services:
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
       - SPARK_SSL_ENABLED=no
       - ENABLE_THRIFT_SERVER=yes # for spark-dbt
-      - SPARK_MASTER_OPTS=-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml
+      # - SPARK_MASTER_OPTS=-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml
     command: sh -c "(/opt/bitnami/spark/sbin/start-thriftserver.sh &) && /opt/bitnami/scripts/spark/run.sh"
     volumes:
       - jmx-exporter:/opt/jmx-exporter
