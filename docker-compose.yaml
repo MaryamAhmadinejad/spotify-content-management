@@ -37,6 +37,16 @@ services:
         echo 'rules:
           - pattern: \"kafka.controller<type=KafkaController, name=ActiveControllerCount><>Value\"
             name: \"kafka_controller_active_controller_count\"' >> /opt/jmx-exporter/kafka-jmx-config.yaml
+        echo 'startDelaySeconds: 0' > /opt/jmx-exporter/spark-master-jmx-config.yaml &&
+        echo 'rules:
+          - pattern: \"org.apache.spark<type=Master, name=(.*)><>Value\"
+            name: \"spark_master_\$1\"
+            type: GAUGE' >> /opt/jmx-exporter/spark-master-jmx-config.yaml
+        echo 'startDelaySeconds: 0' > /opt/jmx-exporter/spark-worker-jmx-config.yaml &&
+        echo 'rules:
+          - pattern: \"org.apache.spark<type=Worker, name=(.*)><>Value\"
+            name: \"spark_worker_\$1\"
+            type: GAUGE' >> /opt/jmx-exporter/spark-worker-jmx-config.yaml
       "
 
   # Kafka UI 
@@ -92,6 +102,8 @@ services:
       - SPARK_SSL_ENABLED=no
       - ENABLE_THRIFT_SERVER=yes # for spark-dbt
     command: sh -c "(/opt/bitnami/spark/sbin/start-thriftserver.sh &) && /opt/bitnami/scripts/spark/run.sh"
+    depends_on:
+      - jmx-exporter-setup
 
   spark-worker:
     image: bitnami/spark:latest
@@ -105,6 +117,7 @@ services:
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
       - SPARK_SSL_ENABLED=no
     depends_on:
+      - jmx-exporter-setup
       - spark-master
 
   spark-processor:
