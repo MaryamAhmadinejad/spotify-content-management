@@ -9,3 +9,6 @@ scrape_configs:
     metrics_path: '/metrics'
     static_configs:
       - targets: ['kafka:7071']
+  - job_name: 'spark-master'
+    static_configs:
+      - targets: ['spark-master:9100']
