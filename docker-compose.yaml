@@ -215,7 +215,7 @@ services:
     image: f1yegor/clickhouse-exporter:latest
     container_name: clickhouse-exporter
     command:
-      - ["--clickhouse.url=http://clickhouse:8123"]
+      - "--clickhouse.url=http://clickhouse:8123"
     depends_on:
       - clickhouse
     environment:
