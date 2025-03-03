@@ -216,8 +216,8 @@ services:
     container_name: clickhouse-exporter
     depends_on:
       - clickhouse
-    environment:
-    - scrape_uri=http://clickhouse:8123/
+    command:
+      - '--scrape_uri=http://clickhouse:8123/'
     ports:
       - 9363:9363
     restart: unless-stopped
