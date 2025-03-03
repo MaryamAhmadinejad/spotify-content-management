@@ -187,7 +187,6 @@ services:
 
   clickhouse:
     image: clickhouse:24.9.3
-    container_name: clickhouse
     depends_on:
       - kafka
       - namenode
@@ -201,11 +200,11 @@ services:
     volumes:
       - clickhouse-data-volume:/var/lib/clickhouse/
       - clickhouse-log-volume:/var/log/clickhouse-server/
+      - jmx-exporter:/opt/jmx-exporter
     ports:
       - 8123:8123
       - 9001:9000
       - 9005:9005
-      - 7071:7071
     healthcheck:
       test: [ "CMD-SHELL", "wget -q -O - http://localhost:8123/ping | grep -q Ok. || exit 1" ]
       interval: 30s
