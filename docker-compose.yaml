@@ -37,16 +37,6 @@ services:
         echo 'rules:
           - pattern: \"kafka.controller<type=KafkaController, name=ActiveControllerCount><>Value\"
             name: \"kafka_controller_active_controller_count\"' >> /opt/jmx-exporter/kafka-jmx-config.yaml
-        echo 'startDelaySeconds: 0' > /opt/jmx-exporter/spark-master-jmx-config.yaml &&
-        echo 'rules:
-          - pattern: \"org.apache.spark<type=Master, name=(.*)><>Value\"
-            name: \"spark_master_\$1\"
-            type: GAUGE' >> /opt/jmx-exporter/spark-master-jmx-config.yaml
-        echo 'startDelaySeconds: 0' > /opt/jmx-exporter/spark-worker-jmx-config.yaml &&
-        echo 'rules:
-          - pattern: \"org.apache.spark<type=Worker, name=(.*)><>Value\"
-            name: \"spark_worker_\$1\"
-            type: GAUGE' >> /opt/jmx-exporter/spark-worker-jmx-config.yaml
       "
 
   # Kafka UI 
@@ -88,14 +78,12 @@ services:
       
   # Spark Standalone Cluster
   spark-master:
-    image: bde2020/spark-master:3.3.0-hadoop3.3
-    platform: linux/amd64
+    image: bitnami/spark
     ports:
       - "8080:8080"  # Spark Master UI
       - "7077:7077"  # Spark Master Port
       - "4040:4040"  # Spark Application UI
       - "10000:10000" # for spark-dbt
-      - "9100:9100"  # JMX Exporter
     environment:
       - SPARK_MODE=master
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
@@ -103,15 +91,13 @@ services:
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
       - SPARK_SSL_ENABLED=no
       - ENABLE_THRIFT_SERVER=yes # for spark-dbt
-      - JMX_EXPORTER_OPTS=-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=9100:/opt/jmx-exporter/spark-master-jmx-config.yaml
     volumes:
       - jmx-exporter:/opt/jmx-exporter
     depends_on:
       - jmx-exporter-setup
 
   spark-worker:
-    image: bde2020/spark-worker:3.3.0-hadoop3.3
-    platform: linux/amd64
+    image: bitnami/spark
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
