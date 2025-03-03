@@ -37,6 +37,9 @@ services:
         echo 'rules:
           - pattern: \"kafka.controller<type=KafkaController, name=ActiveControllerCount><>Value\"
             name: \"kafka_controller_active_controller_count\"' >> /opt/jmx-exporter/kafka-jmx-config.yaml
+        echo 'startDelaySeconds: 0' > /opt/jmx-exporter/clickhouse-jmx-config.yaml &&
+        echo 'rules:
+          - pattern: \".*\"' >> /opt/jmx-exporter/clickhouse-jmx-config.yaml
       "
 
   # Kafka UI 
@@ -194,6 +197,7 @@ services:
       CLICKHOUSE_USER: spotify
       CLICKHOUSE_PASSWORD: spotify
       CLICKHOUSE_DB: default
+      CLICKHOUSE_JAVA_OPTS: "-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=7071:/opt/jmx-exporter/clickhouse-jmx-config.yaml"
     volumes:
       - clickhouse-data-volume:/var/lib/clickhouse/
       - clickhouse-log-volume:/var/log/clickhouse-server/
@@ -201,11 +205,27 @@ services:
       - 8123:8123
       - 9001:9000
       - 9005:9005
+      - 7071:7071
     healthcheck:
       test: [ "CMD-SHELL", "wget -q -O - http://localhost:8123/ping | grep -q Ok. || exit 1" ]
       interval: 30s
       timeout: 10s
       retries: 3
+  
+  clickhouse-exporter:
+    image: bitnami/clickhouse-exporter:latest
+    container_name: clickhouse-exporter
+    depends_on:
+      - clickhouse
+    environment:
+      CLICKHOUSE_DATABASE: default
+      CLICKHOUSE_USERNAME: spotify
+      CLICKHOUSE_PASSWORD: spotify
+      CLICKHOUSE_SERVER: clickhouse
+      CLICKHOUSE_PORT: 9000
+    ports:
+      - 9363:9363
+    restart: unless-stopped
 
   metabase:
     image: metabase/metabase:v0.52.6
