@@ -213,7 +213,7 @@ services:
       retries: 3
   
   clickhouse-exporter:
-    image: bitnami/clickhouse-exporter:latest
+    image: f1yegor/clickhouse-exporter:latest
     container_name: clickhouse-exporter
     depends_on:
       - clickhouse
