@@ -195,6 +195,10 @@ services:
       CLICKHOUSE_DB: default
       CLICKHOUSE_PROMETHEUS_METRICS_ENABLED: true
       CLICKHOUSE_PROMETHEUS_PORT: 9363
+    command:
+      - --prometheus.metrics=true
+      - --prometheus.endpoint=/metrics
+      - --prometheus.port=9363
     volumes:
       - clickhouse-data-volume:/var/lib/clickhouse/
       - clickhouse-log-volume:/var/log/clickhouse-server/
