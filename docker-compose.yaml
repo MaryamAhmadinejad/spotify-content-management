@@ -216,13 +216,11 @@ services:
     container_name: clickhouse-exporter
     depends_on:
       - clickhouse
-    environment:
-      - scrape_uri=http://clickhouse:8123/
-    command:
-      - '--scrape_uri=http://clickhouse:8123/'
     ports:
-      - 9363:9363
-    restart: unless-stopped
+      - 9116:9116
+    command:
+      - -scrape_uri
+      - http://clickhouse:8123
 
   metabase:
     image: metabase/metabase:v0.52.6
