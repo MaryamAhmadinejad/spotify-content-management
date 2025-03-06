@@ -12,4 +12,4 @@ scrape_configs:
   - job_name: 'clickhouse'
     metrics_path: '/metrics'
     static_configs:
-      - targets: ['clickhouse-exporter:9116']
+      - targets: ['clickhouse:9363']
