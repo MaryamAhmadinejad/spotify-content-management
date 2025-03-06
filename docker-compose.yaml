@@ -196,11 +196,9 @@ services:
       CLICKHOUSE_USER: spotify
       CLICKHOUSE_PASSWORD: spotify
       CLICKHOUSE_DB: default
-      CLICKHOUSE_JAVA_OPTS: "-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.1.0.jar=7071:/opt/jmx-exporter/clickhouse-jmx-config.yaml"
     volumes:
       - clickhouse-data-volume:/var/lib/clickhouse/
       - clickhouse-log-volume:/var/log/clickhouse-server/
-      - jmx-exporter:/opt/jmx-exporter
     ports:
       - 8123:8123
       - 9001:9000
