@@ -196,6 +196,7 @@ services:
     volumes:
       - clickhouse-data-volume:/var/lib/clickhouse/
       - clickhouse-log-volume:/var/log/clickhouse-server/
+      - ./clickhouse-config.xml:/etc/clickhouse-server/config.d/prometheus.xml
     ports:
       - 8123:8123
       - 9001:9000

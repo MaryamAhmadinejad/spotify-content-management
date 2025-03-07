@@ -1,0 +1,6 @@
+<yandex>
+    <prometheus>
+        <endpoint>/metrics</endpoint>
+        <port>9363</port>
+    </prometheus>
+</yandex>
