@@ -36,7 +36,9 @@ services:
         echo 'startDelaySeconds: 0' > /opt/jmx-exporter/kafka-jmx-config.yaml &&
         echo 'rules:
           - pattern: \"kafka.controller<type=KafkaController, name=ActiveControllerCount><>Value\"
-            name: \"kafka_controller_active_controller_count\"' >> /opt/jmx-exporter/kafka-jmx-config.yaml
+            name: \"kafka_controller_active_controller_count\"
+          - pattern: \"kafka.server<type=FetcherLagMetrics, name=ConsumerLag, clientId=(.+), topic=(.+), partition=(.+)><>Value\"
+            name: \"kafka_consumer_lag\"' >> /opt/jmx-exporter/kafka-jmx-config.yaml
       "
 
   # Kafka UI 
