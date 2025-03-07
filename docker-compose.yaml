@@ -37,7 +37,7 @@ services:
         echo 'rules:
           - pattern: \"kafka.controller<type=KafkaController, name=ActiveControllerCount><>Value\"
             name: \"kafka_controller_active_controller_count\"
-          - pattern: \"kafka.controller<type=KafkaController, name=NumTopics><>Value\"
+          - pattern: \"kafka.server<type=BrokerTopicMetrics, name=TopicCount><>Value\"
             name: \"kafka_topics_count\"
           - pattern: \"kafka.server<type=BrokerTopicMetrics, name=MessagesInPerSec><>Count\"
             name: \"kafka_messages_per_sec\"
