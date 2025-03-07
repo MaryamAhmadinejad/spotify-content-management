@@ -207,17 +207,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-  
-  clickhouse-exporter:
-    image: f1yegor/clickhouse-exporter:latest
-    container_name: clickhouse-exporter
-    depends_on:
-      - clickhouse
-    ports:
-      - 9116:9116
-    command:
-      - -scrape_uri
-      - http://clickhouse:8123
 
   metabase:
     image: metabase/metabase:v0.52.6
